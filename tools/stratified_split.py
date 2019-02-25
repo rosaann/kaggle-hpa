@@ -171,6 +171,7 @@ def main():
     dup_examples_dict.update(dup_examples_dict_a)
     single_examples_dict.update(single_examples_dict_a)
 
+    print(dup_examples_dict)
     print('len(dup_examples):', len(dup_examples_dict))
     print('len(single_examples):', len(single_examples_dict))
 
