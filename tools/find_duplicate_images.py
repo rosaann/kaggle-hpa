@@ -55,12 +55,12 @@ def find_duplicate(hash_func, df_train, df_external,
         if str(key) == '0000000000000000':
             for id_str in id_list:
                 labels = get_labels([id_str], df_train, df_external)
-                assert labels is not None
-                records.append((key, id_str, labels))
+                if labels is not None:
+                    records.append((key, id_str, labels))
         else:
             labels = get_labels(id_list, df_train, df_external)
-            assert labels is not None
-            records.append((key, values_str, labels))
+            if labels is not None:
+                records.append((key, values_str, labels))
 
     df = pd.DataFrame.from_records(records, columns=['hash', 'Ids', 'Target'])
     return df
