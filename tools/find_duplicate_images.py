@@ -83,6 +83,9 @@ def main():
     external_dir = os.path.join(raw_images_dir, 'external')
 
     train_filenames = list(glob.glob(os.path.join(train_dir, '*_green.png')))
+    if True :
+        print (train_filenames)
+        return
     external_filenames = list(glob.glob(os.path.join(external_dir, '*_green.png')))
 
     hash_func = {'phash': imagehash.phash,
