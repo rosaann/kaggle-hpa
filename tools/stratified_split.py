@@ -60,13 +60,16 @@ def merge_duplicates(dup_examples_dict):
 
         dup_examples_dict = {}
         for a, b in tqdm.tqdm(combinations(dup_examples, 2)):
-            print('a ', a, ' b ', b)
             intersection = set(a[0]) & set(b[0])
-            print('inter ', intersection)
+           # print('inter ', intersection)
             if len(intersection) > 0:
                 union = set(a[0]) | set(b[0])
-                print('union ', union)
-                dup_examples_dict[tuple(sorted(list(union)))] = merge_labels(a, b)
+               # print('union ', union)
+                mer = merge_labels(a, b)
+                print('a ', a, ' b ', b)
+
+                print('mer ', mer)
+                dup_examples_dict[tuple(sorted(list(union)))] = mer
                 print('dup_examples_dict ', dup_examples_dict)
 
         for example in tqdm.tqdm(dup_examples):
