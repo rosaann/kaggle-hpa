@@ -66,11 +66,11 @@ def merge_duplicates(dup_examples_dict):
                 union = set(a[0]) | set(b[0])
                # print('union ', union)
                 mer = merge_labels(a, b)
-                print('a ', a, ' b ', b)
+           #     print('a ', a, ' b ', b)
 
-                print('mer ', mer)
+           #     print('mer ', mer)
                 dup_examples_dict[tuple(sorted(list(union)))] = mer
-                print('dup_examples_dict ', dup_examples_dict)
+           #     print('dup_examples_dict ', dup_examples_dict)
 
         for example in tqdm.tqdm(dup_examples):
             is_pass = False
