@@ -39,6 +39,7 @@ class DefaultDataset(Dataset):
         print('labels_path ', labels_path)
         df_labels = pd.read_csv(labels_path)
         df_labels = df_labels[df_labels['Split'] == self.split]
+        print('df_labels ', df_labels)
         df_labels = df_labels.reset_index()
 
         train_id_len = len('770126a4-bbc6-11e8-b2bc-ac1f6b6435d0')

@@ -189,8 +189,10 @@ def train(config, model, dataloaders, criterion, optimizer, scheduler, writer, s
 
 def run(config):
     train_dir = config.train.dir
-
-    model = get_model(config).cuda()
+    
+    model = get_model(config)
+    if torch.cuda.is_available():
+        model = model.cuda()
     criterion = get_loss(config)
     optimizer = get_optimizer(config, model.parameters())
 
@@ -202,9 +204,10 @@ def run(config):
 
     print('from checkpoint: {} last epoch:{}'.format(checkpoint, last_epoch))
     scheduler = get_scheduler(config, optimizer, last_epoch)
-
+    
     dataloaders = {split:get_dataloader(config, split, get_transform(config, split))
                    for split in ['train', 'val']}
+    
 
     writer = SummaryWriter(config.train.dir)
     train(config, model, dataloaders, criterion, optimizer, scheduler,
