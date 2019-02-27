@@ -36,6 +36,7 @@ class DefaultDataset(Dataset):
     def load_labels(self):
         labels_path = '{}.{}.csv'.format(self.split_prefix, self.idx_fold)
         labels_path = os.path.join(self.dataset_dir, labels_path)
+        print('labels_path ', labels_path)
         df_labels = pd.read_csv(labels_path)
         df_labels = df_labels[df_labels['Split'] == self.split]
         df_labels = df_labels.reset_index()
