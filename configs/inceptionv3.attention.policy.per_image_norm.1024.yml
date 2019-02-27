@@ -13,7 +13,7 @@ model:
 
 train:
   dir: './results/inceptionv3.attention.policy.per_image_norm.1024'
-  batch_size: 16 
+  batch_size: 4 
   num_epochs: 28
   num_grad_acc: 2
 
