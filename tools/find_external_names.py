@@ -36,11 +36,11 @@ def main():
     records = []
     for file_name in external_filenames:
         name = file_name.split('/')[-1]
-        print('dir ', file_name, ' name ', name)
+       # print('dir ', file_name, ' name ', name)
         
-        records.append(name)
-        break    
-    df = pd.DataFrame.from_records(records, columns=['Id'])
+        records.append((name, '1'))
+       # break    
+    df = pd.DataFrame.from_records(records, columns=['Id', 'x'])
     output_filename = os.path.join(args.data_dir, 'external_name.csv')
     df.to_csv(output_filename, index=False)
  
