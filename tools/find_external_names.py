@@ -28,7 +28,7 @@ def parse_args():
     return parser.parse_args()
 def main():
     args = parse_args()
-    raw_images_dir = os.path.join(args.data_dir, 'raw')
+    raw_images_dir = os.path.join(args.data_dir, 'rgby')
     external_dir = os.path.join(raw_images_dir, 'external')
 
     external_filenames = list(glob.glob(os.path.join(external_dir, '*.png')))
@@ -41,7 +41,7 @@ def main():
         records.append((name, '1'))
        # break    
     df = pd.DataFrame.from_records(records, columns=['Id', 'x'])
-    output_filename = os.path.join(args.data_dir, 'external_name.csv')
+    output_filename = os.path.join(args.data_dir, 'external_rgb_name.csv')
     df.to_csv(output_filename, index=False)
  
 if __name__ == '__main__':
