@@ -28,6 +28,7 @@ def parse_args():
     return parser.parse_args()
 def main():
     args = parse_args()
+    raw_images_dir = os.path.join(args.data_dir, 'raw')
     external_dir = os.path.join(raw_images_dir, 'external')
 
     external_filenames = list(glob.glob(os.path.join(external_dir, '*.png')))
