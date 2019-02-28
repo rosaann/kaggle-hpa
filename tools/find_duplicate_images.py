@@ -49,7 +49,7 @@ def find_duplicate(hash_func, df_train, df_external,
 
     records = []
     for key, values in images_dict.items():
-        id_list = [os.path.basename(v)[:-len('_green.png')] for v in values]
+        id_list = [os.path.basename(v)[:-len('_yellow.png')] for v in values]
         values_str = ' '.join(id_list)
 
         if str(key) == '0000000000000000':
@@ -82,8 +82,8 @@ def main():
     train_dir = os.path.join(raw_images_dir, 'train')
     external_dir = os.path.join(raw_images_dir, 'external')
 
-    train_filenames = list(glob.glob(os.path.join(train_dir, '*_green.png')))
-    external_filenames = list(glob.glob(os.path.join(external_dir, '*_green.png')))
+    train_filenames = list(glob.glob(os.path.join(train_dir, '*_yellow.png')))
+    external_filenames = list(glob.glob(os.path.join(external_dir, '*_yellow.png')))
 
     hash_func = {'phash': imagehash.phash,
                  'ahash': imagehash.average_hash}
