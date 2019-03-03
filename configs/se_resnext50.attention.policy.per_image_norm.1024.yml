@@ -13,7 +13,7 @@ model:
 
 train:
   dir: './results/se_resnext50.attention.per_image_norm.1024'
-  batch_size: 4
+  batch_size: 3
   num_epochs: 23
   num_grad_acc: 4
 
