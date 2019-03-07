@@ -55,8 +55,10 @@ def sample_policy():
     return policies
 
 
-def search_once(config, policy):
-    model = get_model(config).cuda()
+def search_once(config, policy, writer):
+    model = get_model(config)
+    if torch.cuda.is_available():
+        model = model.cuda()
     criterion = get_loss(config)
     optimizer = get_optimizer(config, model.parameters())
     scheduler = get_scheduler(config, optimizer, -1)
@@ -66,7 +68,7 @@ def search_once(config, policy):
     dataloaders = {split:get_dataloader(config, split, transforms[split])
                    for split in ['train', 'val']}
 
-    score_dict = train(config, model, dataloaders, criterion, optimizer, scheduler, None, 0)
+    score_dict = train(config, model, dataloaders, criterion, optimizer, scheduler, writer, 0)
     return score_dict['f1_mavg']
 
 
@@ -77,7 +79,7 @@ def run(config):
 
     # base_policy
     policy = []
-    score = search_once(config, policy)
+    score = search_once(config, policy,writer )
     print('===============================')
     print('base score:', score)
     writer.add_scalar('val/f1', score, 0)

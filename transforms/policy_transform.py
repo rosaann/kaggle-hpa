@@ -57,6 +57,9 @@ def policy_transform(split,
   for policy in policies:
     op_1, params_1 = policy[0]
     op_2, params_2 = policy[1]
+    print('op_1 ', op_1, ' pa_1 ', params_1)
+    print('op_2 ', op_2, ' pa_2 ', params_2)
+
     aug = Compose([
       globals().get(op_1)(**params_1),
       globals().get(op_2)(**params_2),

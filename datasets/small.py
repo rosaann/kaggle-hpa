@@ -44,7 +44,7 @@ class SmallDataset(Dataset):
 
     def load_examples(self):
         return [(row['Id'], row['filepath'], [int(l) for l in row['Target'].split(' ')])
-                for _, row in self.df_labels.iterrows()]
+                for _, row in self.df_labels.iterrows()][:100]
 
     def __getitem__(self, index):
         example = self.examples[index]

@@ -33,12 +33,16 @@ def get_checkpoints(config, num_checkpoint=10, epoch_end=None):
 def run(config, num_checkpoint, epoch_end, output_filename):
     dataloader = get_dataloader(config, 'train', get_transform(config, 'val'))
 
-    model = get_model(config).cuda()
+    model = get_model(config)
+    if torch.cuda.is_available():
+        model = model.cuda()
     checkpoints = get_checkpoints(config, num_checkpoint, epoch_end)
 
     utils.checkpoint.load_checkpoint(model, None, checkpoints[0])
     for i, checkpoint in enumerate(checkpoints[1:]):
-        model2 = get_model(config).cuda()
+        model2 = get_model(config)
+        if torch.cuda.is_available():
+            model2 = model2.cuda()
         last_epoch, _ = utils.checkpoint.load_checkpoint(model2, None, checkpoint)
         swa.moving_average(model, model2, 1. / (i + 2))
 
@@ -62,7 +66,7 @@ def parse_args():
                         default='swa', type=str)
     parser.add_argument('--num_checkpoint', dest='num_checkpoint',
                         help='number of checkpoints for averaging',
-                        default=10, type=int)
+                        default=1, type=int)
     parser.add_argument('--epoch_end', dest='epoch_end',
                         help='epoch end',
                         default=None, type=int)

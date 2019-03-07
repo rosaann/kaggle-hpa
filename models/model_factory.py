@@ -181,6 +181,7 @@ def get_resnet34(num_classes=28, **_):
 def get_resnet18(num_classes=28, **_):
     model_name = 'resnet18'
     model = pretrainedmodels.__dict__[model_name](num_classes=1000, pretrained='imagenet')
+    print(model)
     conv1 = model.conv1
     model.conv1 = nn.Conv2d(in_channels=4,
                             out_channels=conv1.out_channels,
