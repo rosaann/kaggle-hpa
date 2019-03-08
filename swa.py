@@ -66,7 +66,7 @@ def parse_args():
                         default='swa', type=str)
     parser.add_argument('--num_checkpoint', dest='num_checkpoint',
                         help='number of checkpoints for averaging',
-                        default=1, type=int)
+                        default=10, type=int)
     parser.add_argument('--epoch_end', dest='epoch_end',
                         help='epoch end',
                         default=None, type=int)
