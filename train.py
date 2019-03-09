@@ -27,11 +27,13 @@ import utils.metrics
 
 def inference(model, images):
     logits = model(images)
+  #  print('logits ', logits)
     if isinstance(logits, tuple):
         logits, aux_logits = logits
     else:
         aux_logits = None
     probabilities = F.sigmoid(logits)
+  #  print('probabilities ', probabilities)
     return logits, aux_logits, probabilities
 
 
@@ -49,8 +51,11 @@ def evaluate_single_epoch(config, model, dataloader, criterion,
         loss_list = []
         tbar = tqdm.tqdm(enumerate(dataloader), total=total_step)
         for i, data in tbar:
-            images = data['image'].cuda()
-            labels = data['label'].cuda()
+            images = data['image']
+            labels = data['label']
+            if torch.cuda.is_available():
+                images = images.cuda()
+                labels = labels.cuda()
             logits, aux_logits, probabilities = inference(model, images)
 
             loss = criterion(logits, labels.float())
@@ -103,8 +108,13 @@ def train_single_epoch(config, model, dataloader, criterion, optimizer,
     log_dict = {}
     tbar = tqdm.tqdm(enumerate(dataloader), total=total_step)
     for i, data in tbar:
-        images = data['image'].cuda()
-        labels = data['label'].cuda()
+        images = data['image']
+        labels = data['label']
+    #    print('images ', images.shape)
+   #     print('labels ', labels)
+        if torch.cuda.is_available():
+            images = images.cuda()
+            labels = labels.cuda()
         logits, aux_logits, probabilities = inference(model, images)
         loss = criterion(logits, labels.float())
         if aux_logits is not None:
@@ -145,10 +155,11 @@ def train_single_epoch(config, model, dataloader, criterion, optimizer,
 
 def train(config, model, dataloaders, criterion, optimizer, scheduler, writer, start_epoch):
     num_epochs = config.train.num_epochs
-
+    
     if torch.cuda.device_count() > 1:
         model = torch.nn.DataParallel(model)
-    model = model.cuda()
+    if torch.cuda.is_available():
+        model = model.cuda()
 
     postfix_dict = {'train/lr': 0.0,
                     'train/acc': 0.0,

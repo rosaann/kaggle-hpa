@@ -41,6 +41,8 @@ def copy_last_n_checkpoints(config, n, name):
 def load_checkpoint(model, optimizer, checkpoint):
   print('load checkpoint from', checkpoint)
   checkpoint = torch.load(checkpoint)
+ # print('check ', checkpoint)
+ # return
 
   checkpoint_dict = {}
   for k, v in checkpoint['state_dict'].items():

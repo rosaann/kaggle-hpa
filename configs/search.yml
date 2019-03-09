@@ -8,7 +8,7 @@ model:
 train:
   dir: './results/search'
   batch_size: 32
-  num_epochs: 60
+  num_epochs: 6
 
 loss:
   name: 'binary_focal_loss'

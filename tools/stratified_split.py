@@ -105,10 +105,13 @@ def merge_dup_and_single(dup_examples_dict, single_examples_dict):
 def split_stratified(all_examples_dict):
     examples = []
     y_list = []
+    
     for key, labels in all_examples_dict.items():
         labels = list(labels)
         np_labels = np.zeros((28,), dtype=int)
         np_labels[np.array(labels)] = 1
+       # print('np_labels ', np_labels)
+       # print('key ', key)
         examples.append((key, labels))
         y_list.append(np_labels)
 
@@ -118,30 +121,47 @@ def split_stratified(all_examples_dict):
     # test_val
     mskf = MultilabelStratifiedKFold(n_splits=11, random_state=1234)
     folds = []
+  #  print('whole len ', len(X))
     for train_index, test_index in mskf.split(X, y):
         folds.append(test_index)
+       # print('train_index ', train_index)
+       # print('train_len ', len(train_index))
+        
+      #  print('test_index ', test_index)
+      #  print('test_index ', len(test_index))
 
     for a, b in combinations(folds, 2):
         assert len(set(a) & set(b)) == 0
+   # print('folds ', folds)
     return examples, folds
 
-
+#把数据列表，分成11个不重复的folds
+#再分5次，每一次把11个folds按一定配比组合成val的，train的，test_val的,每一次的结果，存一个csv
 def save(examples, folds, num_fold, data_dir, use_external):
     for fold_idx in range(num_fold):
+        print('fold_idx ', fold_idx)
         records = []
         for i, indices in enumerate(folds):
+            print('i ', i)
             if i == (fold_idx * 2) or i == (fold_idx * 2) + 1:
+                print(' ** val')
                 for j in indices:
                     for id_str in examples[j][0]:
-                        records.append((id_str, ' '.join([str(v) for v in examples[j][1]]), 'val'))
+                        d = (id_str, ' '.join([str(v) for v in examples[j][1]]), 'val')
+                       # print('d ', d)
+                        records.append(d)
             elif i == 10:
+                print(' *** test_val')
                 for j in indices:
                     for id_str in examples[j][0]:
                         records.append((id_str, ' '.join([str(v) for v in examples[j][1]]), 'test_val'))
             else:
+                print(' **** train')
                 for j in indices:
                     for id_str in examples[j][0]:
-                        records.append((id_str, ' '.join([str(v) for v in examples[j][1]]), 'train'))
+                        dd = (id_str, ' '.join([str(v) for v in examples[j][1]]), 'train')
+                      #  print('dd ', dd)
+                        records.append(dd)
         df = pd.DataFrame.from_records(records, columns=['Id', 'Target', 'Split'])
         if use_external:
             output_filename = os.path.join(data_dir, 'split.stratified.{}.csv'.format(fold_idx))
