@@ -87,20 +87,10 @@ def main():
 
     print('make submission')
 
-    test_val_filenames = ['inferences/resnet34.0.test_val.csv',
-                          'inferences/resnet34.1.test_val.csv',
-                          'inferences/resnet34.2.test_val.csv',
-                          'inferences/resnet34.3.test_val.csv',
-                          'inferences/resnet34.4.test_val.csv',
-                          'inferences/inceptionv3.0.test_val.csv',
+    test_val_filenames = ['inferences/inceptionv3.0.test_val.csv',
                           'inferences/se_resnext50.0.test_val.csv']
 
-    test_filenames = ['inferences/resnet34.0.test.csv',
-                      'inferences/resnet34.1.test.csv',
-                      'inferences/resnet34.2.test.csv',
-                      'inferences/resnet34.3.test.csv',
-                      'inferences/resnet34.4.test.csv',
-                      'inferences/inceptionv3.0.test.csv',
+    test_filenames = ['inferences/inceptionv3.0.test.csv',
                       'inferences/se_resnext50.0.test.csv']
 
     weights = [1/5, 1/5, 1/5, 1/5, 1/5, 1.0, 1.0]
