@@ -114,6 +114,7 @@ def main():
     df_test = ensemble(df_test_list, weights)
 
     df_thres = find_best_thres(df_test_val)
+    print('df_thres ', df_thres)
     f1 = evaluate(df_test_val, df_thres)
     print('validation f1:', f1)
 
