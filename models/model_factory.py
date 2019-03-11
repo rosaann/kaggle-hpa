@@ -108,23 +108,31 @@ class AttentionInceptionV3(nn.Module):
             else:
                 aux_features = features_a
             aux_logits = self.aux_linear(aux_features)
+            print('aux_logits ', aux_logits.shape)
             assert aux_logits.size(1) == self.num_classes and \
                    aux_logits.size(2) == self.aux_attention_size and \
                    aux_logits.size(3) == self.aux_attention_size
             aux_logits_attention = self.aux_attention(aux_features)
+            print('aux_logits_attention ', aux_logits_attention.shape)
             assert aux_logits_attention.size(1) == self.num_classes and \
                    aux_logits_attention.size(2) == self.aux_attention_size and \
                    aux_logits_attention.size(3) == self.aux_attention_size
             aux_logits_attention = aux_logits_attention.view(
                 -1, self.num_classes,
                 self.aux_attention_size * self.aux_attention_size)
+            print('aux_logits_attention-2 ', aux_logits_attention.shape)
+
             aux_attention = F.softmax(aux_logits_attention, dim=2)
+            print('aux_attention-1 ', aux_attention.shape)
             aux_attention = aux_attention.view(
                 -1, self.num_classes, self.aux_attention_size, self.aux_attention_size)
+            print('aux_attention-2 ', aux_attention.shape)
             aux_logits = aux_logits * aux_attention
+            print('aux_logits-1 ', aux_logits.shape)
             aux_logits = aux_logits.view(
                 -1, self.num_classes,
                 self.aux_attention_size * self.aux_attention_size).sum(2).view(-1, self.num_classes)
+            print('aux_logits-2 ', aux_logits.shape)
 
         features_b = self.features_b(features_a)
         if self.aux_attention_size != features_b.size(-1):
