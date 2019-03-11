@@ -93,11 +93,12 @@ def main():
     test_filenames = ['inferences/inceptionv3.0.test.csv',
                       'inferences/se_resnext50.0.test.csv']
 
-    weights = [1/5, 1/5, 1/5, 1/5, 1/5, 1.0, 1.0]
+    weights = [ 1.0, 1.0]
 
-    leak_filenames = ['data/leak.csv',
-                      'data/data_leak.ahash.csv',
-                      'data/data_leak.phash.csv']
+  #  leak_filenames = ['data/leak.csv',
+  #                    'data/data_leak.ahash.csv',
+  #                    'data/data_leak.phash.csv']
+    leak_filenames = ['data/data_leak.phash.csv']
 
     output_filename = 'submissions/submission.csv'
     os.makedirs(os.path.dirname(output_filename), exist_ok=True)
