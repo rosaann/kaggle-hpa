@@ -102,9 +102,11 @@ class AttentionInceptionV3(nn.Module):
 
     def forward(self, x):
         features_a = self.features_a(x)
+        print('features_a ', features_a.shape)
         if self.training:
             if self.aux_attention_size != features_a.size(-1):
                 aux_features = self.aux_avgpool(features_a)
+                print('aux_features ', aux_features.shape)
             else:
                 aux_features = features_a
             aux_logits = self.aux_linear(aux_features)
