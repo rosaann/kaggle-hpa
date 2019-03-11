@@ -141,23 +141,32 @@ class AttentionInceptionV3(nn.Module):
             print('aux_logits-4 ', aux_logits.shape)
 
         features_b = self.features_b(features_a)
+        print('features_b ', features_b.shape)
         if self.aux_attention_size != features_b.size(-1):
             features_b = self.avgpool(features_b)
+            print('features_b-1 ', features_b.shape)
         logits = self.last_linear(features_b)
+        print('logits ', logits.shape)
         assert logits.size(1) == self.num_classes and \
                logits.size(2) == self.attention_size and \
                logits.size(3) == self.attention_size
 
         logits_attention = self.attention(features_b)
+        print('logits_attention ', logits_attention.shape)
         assert logits_attention.size(1) == self.num_classes and \
                logits_attention.size(2) == self.attention_size and \
                logits_attention.size(3) == self.attention_size
         logits_attention = logits_attention.view(-1, self.num_classes, self.attention_size * self.attention_size)
+        print('logits_attention-1 ', logits_attention.shape)
         attention = F.softmax(logits_attention, dim=2)
+        print('attention ', attention.shape)
         attention = attention.view(-1, self.num_classes, self.attention_size, self.attention_size)
+        print('attention-1 ', attention.shape)
 
         logits = logits * attention
+        print('logits-1 ', logits.shape)
         logits = logits.view(-1, self.num_classes, self.attention_size * self.attention_size).sum(2).view(-1, self.num_classes)
+        print('logits-2 ', logits.shape)
         if self.training:
             return logits, aux_logits
         return logits
