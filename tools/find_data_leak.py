@@ -84,9 +84,9 @@ def main():
     train_dir = os.path.join(raw_images_dir, 'train')
     external_dir = os.path.join(raw_images_dir, 'external')
 
-    test_filenames = list(glob.glob(os.path.join(test_dir, '*_green.png')))
-    train_filenames = list(glob.glob(os.path.join(train_dir, '*_green.png')))
-    external_filenames = list(glob.glob(os.path.join(external_dir, '*_green.png')))
+    test_filenames = list(glob.glob(os.path.join(test_dir, '*_yellow.png')))
+    train_filenames = list(glob.glob(os.path.join(train_dir, '*_yellow.png')))
+    external_filenames = list(glob.glob(os.path.join(external_dir, '*_yellow.png')))
 
     hash_func = {'phash': imagehash.phash,
                  'ahash': imagehash.average_hash}
