@@ -50,8 +50,11 @@ def inference(config, model, split, output_filename=None):
                 B, T, C, H, W = images.size()
                 logits = model(images.view(-1, C, H, W))[:,:28]
                 logits = logits.view(B, T, -1)
+                print('logits ', logits)
                 probabilities = F.sigmoid(logits)
+                print('probabilities ', probabilities)
                 probabilities = probabilities.mean(dim=1)
+                print('probabilities later ', probabilities)
             else:
                 logits = model(images)[:,:28]
                 probabilities = F.sigmoid(logits)
