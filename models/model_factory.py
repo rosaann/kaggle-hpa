@@ -133,8 +133,12 @@ class AttentionInceptionV3(nn.Module):
             print('aux_logits-1 ', aux_logits.shape)
             aux_logits = aux_logits.view(
                 -1, self.num_classes,
-                self.aux_attention_size * self.aux_attention_size).sum(2).view(-1, self.num_classes)
+                self.aux_attention_size * self.aux_attention_size)
             print('aux_logits-2 ', aux_logits.shape)
+            aux_logits = aux_logits.sum(2)
+            print('aux_logits-3 ', aux_logits.shape)
+            aux_logits = aux_logits.view(-1, self.num_classes)
+            print('aux_logits-4 ', aux_logits.shape)
 
         features_b = self.features_b(features_a)
         if self.aux_attention_size != features_b.size(-1):
