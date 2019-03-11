@@ -38,8 +38,8 @@ def find_best_thres(df_val):
 def ensemble(dfs, weights):
     label_keys = ['L{:02}'.format(l) for l in range(28)]
     prob_keys = ['P{:02}'.format(l) for l in range(28)]
-    print('label_keys ', label_keys)
-    print('prob_keys ', prob_keys)
+   # print('label_keys ', label_keys)
+   # print('prob_keys ', prob_keys)
     if 'L00' in dfs[0].index:
         df_base = dfs[0][label_keys]
         df_probs = sum([df[prob_keys] * w for df, w in zip(dfs, weights)]) / sum(weights)
@@ -110,6 +110,7 @@ def main():
 
     print('ensemble..')
     df_test_val = ensemble(df_test_val_list, weights)
+    print('df_test_val ', df_test_val)
     df_test = ensemble(df_test_list, weights)
 
     df_thres = find_best_thres(df_test_val)
